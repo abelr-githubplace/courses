@@ -56,7 +56,7 @@ struct GregorianDate today = {14, 6, 2024};
 
 ### Dot operator
 
-To access today's fields we must use the dot operator `.` as follows.
+To access today's fields we must use the dot operator `.`.
 
 ```c
 unsigned char this_day = today.day;
@@ -91,7 +91,7 @@ struct Book lord_of_the_rings =
 };
 ```
 
-> Note that when a pointer value is $0$ it is considered a `NULL` pointer. The above could be written using the standard library as follows.
+> Note that when a pointer value is $0$ it is considered a `NULL` pointer. The above could be written using the standard library.
 >
 > ```c
 > #include <stdlib.h>
@@ -105,7 +105,7 @@ struct Book lord_of_the_rings =
 
 ### Arrow operator
 
-To access the month in which the book "The Lord of the Rings" will return to the library we have to use the arrow operator `->` as follows.
+To access the month in which the book "The Lord of the Rings" will return to the library we have to use the arrow operator `->`.
 
 ```c
 unsigned char return_month = lord_of_the_rings.return_date->month;
@@ -258,7 +258,7 @@ enum YearBatch
 
 > Remember that any variant is an unsigned number.
 
-However, this enumeration starts at $0$ where we want to start at our first year. Thankfully, we can just specify the index value of every variant as follows.
+However, this enumeration starts at $0$ where we want to start at our first year. Thankfully, we can just specify the index value of every variant.
 
 ```c
 enum YearBatch
