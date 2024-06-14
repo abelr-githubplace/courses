@@ -1,24 +1,24 @@
 # The C programming language: data types
 
-The C programming language is a hard typed language meaning each variable has a defined type at compile time and is *explicitely written in the code*.
+The C programming language is a hard typed language meaning each variable has a defined type at compile time and is _explicitely written in the code_.
 
 ## Primitive types
 
 | Type                                                  | Bytes |                  Lower bound |                 Higher bound |
-| :--                                                   | :--:  |                          --: |                          --: |
+| :---------------------------------------------------- | :---: | ---------------------------: | ---------------------------: |
 | **Signed types**                                      |       |                              |                              |
-| `char`                                                | $1$   |                       $-128$ |                        $127$ |
-| `short`, (16 bits processors) `int`                   | $2$   |                    $-32,768$ |                     $32,767$ |
-| `long`, (32 bits processors) `int`                    | $4$   |             $-2,147,483,648$ |              $2,147,483,647$ |
-| `long long`                                           | $8$   | $-9,223,372,036,854,775,808$ |  $9,223,372,036,854,775,807$ |
+| `char`                                                |  $1$  |                       $-128$ |                        $127$ |
+| `short`, (16 bits processors) `int`                   |  $2$  |                    $-32,768$ |                     $32,767$ |
+| `long`, (32 bits processors) `int`                    |  $4$  |             $-2,147,483,648$ |              $2,147,483,647$ |
+| `long long`                                           |  $8$  | $-9,223,372,036,854,775,808$ |  $9,223,372,036,854,775,807$ |
 | **Unsigned types**                                    |       |                              |                              |
-| `unsigned char`                                       | $1$   |                          $0$ |                        $255$ |
-| `unsigned short`, (16 bits processors) `unsigned int` | $2$   |                          $0$ |                     $65,535$ |
-| `unsigned long`, (32 bits processors) `unsigned int`  | $4$   |                          $0$ |              $4,294,967,295$ |
-| `unsigned long long`                                  | $8$   |                          $0$ | $18,446,744,073,709,551,615$ |
+| `unsigned char`                                       |  $1$  |                          $0$ |                        $255$ |
+| `unsigned short`, (16 bits processors) `unsigned int` |  $2$  |                          $0$ |                     $65,535$ |
+| `unsigned long`, (32 bits processors) `unsigned int`  |  $4$  |                          $0$ |              $4,294,967,295$ |
+| `unsigned long long`                                  |  $8$  |                          $0$ | $18,446,744,073,709,551,615$ |
 | **Floatting types**                                   |       |                              |                              |
-| `float`                                               | $4$   |     $3.4 \times 10^{\, -38}$ |      $3.4 \times 10^{\, 38}$ |
-| `double`                                              | $8$   |    $1.7 \times 10^{\, -308}$ |     $1.7 \times 10^{\, 308}$ |
+| `float`                                               |  $4$  |     $3.4 \times 10^{\, -38}$ |      $3.4 \times 10^{\, 38}$ |
+| `double`                                              |  $8$  |    $1.7 \times 10^{\, -308}$ |     $1.7 \times 10^{\, 308}$ |
 | `long double`                                         | $10$  |   $3.4 \times 10^{\, -4932}$ |    $3.4 \times 10^{\, 4932}$ |
 
 > Note that in C everything is a number.  
@@ -66,7 +66,7 @@ long long this_year = today.year;
 
 ### Nested structures
 
-As the `struct GregorianDate` is a type in  itself, it can be nested into another structure. Let's create a structure that reference a book from a library.
+As the `struct GregorianDate` is a type in itself, it can be nested into another structure. Let's create a structure that reference a book from a library.
 
 ```c
 struct Book
@@ -85,7 +85,7 @@ struct Book harry_potter = {"Harry Potter", 0, 0, 0};
 struct Book lord_of_the_rings =
 {
     "The Lord of the Rings",
-    "Harry",
+    harry_potter.book_name,
     &today,
     &(struct GregorianDate){21, 9, 2024}
 };
@@ -95,9 +95,9 @@ struct Book lord_of_the_rings =
 >
 > ```c
 > #include <stdlib.h>
-> 
+>
 > ...
-> 
+>
 > struct Book harry_potter = {"Harry Potter", NULL, NULL, NULL};
 > ```
 >
@@ -134,10 +134,10 @@ Let's update our books.
 ```c
 struct BookSeries harry_potter_7 =
 {
-    "Harry Potter and the Deathly Hallows", 
-    "Camille", 
-    &(struct GregorianDate){14, 3, 2023}, 
-    &(struct GregorianDate){13, 4, 2023}, 
+    "Harry Potter and the Deathly Hallows",
+    "Camille",
+    &(struct GregorianDate){14, 3, 2023},
+    &(struct GregorianDate){13, 4, 2023},
     NULL
 };
 struct BookSeries harry_potter_6 =
@@ -224,12 +224,12 @@ union Date
 {
     struct GregorianDate gregorian;
     struct RepublicanDate republican;
-}
+};
 ```
 
 > Note that this union cannot hold two dates but only one at a time.
 
-Like a struct, its field can be accessed with the dot operator or arrow operator in its pointer version.
+Like a struct, its field can be accessed with the dot operator or arrow operator when behind a pointer.
 
 ### Difference with a structure
 
@@ -271,7 +271,7 @@ enum YearBatch
 };
 ```
 
-But the C rogramming language indexes its enumeration variants in order so we only need to specify the first one in this case.
+But the C programming language indexes its enumeration variants in order so we only need to specify the first one in this case.
 
 ```c
 enum YearBatch
@@ -296,9 +296,11 @@ typedef struct Book book;
 typedef struct BookSeries book_series;
 typedef struct Student student;
 typedef enum YearBatch year_batch;
+typedef struct RepublicanDate;
+typedef union Date;
 ```
 
-> Note that the norm *ISO C* recommend for enumerations not to be refered to before being defined.  
+> Note that the norm _ISO C_ recommend for enumerations not to be refered to before being defined.  
 > Therefore the following is not recommended.
 >
 > ```c
@@ -339,6 +341,22 @@ typedef struct GregorianDate
     long long year;
 } gregorian_date;
 
+typedef struct RepublicanDate
+{
+    unsigned char day;
+    unsigned char decade;
+    unsigned char month;
+    unsigned char season;
+    long long year;
+    unsigned char epagomenal;
+} republican_date;
+
+typedef union Date
+{
+    gregorian_date gregorian;
+    republican_date republican;
+} date;
+
 typedef struct Book
 {
     char *book_name;
@@ -373,7 +391,7 @@ typedef enum YearBatch
 }; year_batch;
 ```
 
-If the type alias is done with the definition we can even remove the tag from the structure or enumeration as follows.
+If the type alias is done with the definition we can even remove the tag from the structure or enumeration.
 
 ```c
 typedef struct
@@ -382,6 +400,22 @@ typedef struct
     unsigned char month;
     long long year;
 } gregorian_date;
+
+typedef struct
+{
+    unsigned char day;
+    unsigned char decade;
+    unsigned char month;
+    unsigned char season;
+    long long year;
+    unsigned char epagomenal;
+} republican_date;
+
+typedef union
+{
+    gregorian_date gregorian;
+    republican_date republican;
+} date;
 
 typedef struct
 {
